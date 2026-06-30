@@ -31,7 +31,6 @@ export class Enrollment extends Model<
     type: DataType.UUID,
     defaultValue: DataType.UUIDV1,
     primaryKey: true,
-    unique: true,
   })
   declare id: CreationOptional<string>;
 

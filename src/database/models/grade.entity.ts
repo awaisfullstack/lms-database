@@ -44,12 +44,20 @@ export class Grade extends Model<
     type: DataType.INTEGER,
     allowNull: false,
     defaultValue: 100,
+    validate: {
+      min: 1,
+      max: 100,
+    },
   })
-  declare totalMarks: number;
+  declare totalMarks: CreationOptional<number>;
 
   @Column({
     type: DataType.INTEGER,
     allowNull: true,
+    validate: {
+      min: 0,
+      max: 100,
+    },
   })
   declare obtainedMarks: number | null;
 
@@ -66,6 +74,6 @@ export class Grade extends Model<
   })
   declare enrollmentId: string;
 
-  @BelongsTo(() => Enrollment)
+  @BelongsTo(() => Enrollment, 'enrollmentId')
   declare enrollment?: NonAttribute<Enrollment>;
 }

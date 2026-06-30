@@ -47,6 +47,11 @@ module.exports = {
     await queryInterface.addIndex('modules', ['course_id'], {
       name: 'modules_course_id_idx',
     });
+
+    await queryInterface.addIndex('modules', ['course_id', 'position'], {
+      unique: true,
+      name: 'modules_course_position_unique',
+    });
   },
 
   async down(queryInterface, Sequelize) {

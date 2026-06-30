@@ -14,9 +14,6 @@ const MODULES = {
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.bulkDelete('courses', {
-      id: Object.values(MODULES),
-    });
     await queryInterface.bulkInsert('modules', [
       {
         id: MODULES.nestjs_intro,
@@ -65,7 +62,7 @@ module.exports = {
         position: 3,
         course_id: COURSES.react,
       },
-    ]);
+    ],{ ignoreDuplicates: true },);
   },
 
   async down(queryInterface, Sequelize) {

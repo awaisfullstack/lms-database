@@ -9,12 +9,14 @@ import {
   Column,
   DataType,
   ForeignKey,
+  HasMany,
   Model,
   Table,
 } from 'sequelize-typescript';
 import { User } from './user.entity';
 import { Course } from './course.entity';
 import { EnrollmentStatus } from 'src/common/enums/enrollment-status.enum';
+import { Grade } from './grade.entity';
 
 @Table({
   tableName: 'enrollments',
@@ -47,7 +49,7 @@ export class Enrollment extends Model<
   })
   declare courseId: string;
 
-  @BelongsTo(() => Course)
+  @BelongsTo(() => Course, 'courseId')
   declare course?: NonAttribute<Course>;
 
   @ForeignKey(() => User)
@@ -57,6 +59,9 @@ export class Enrollment extends Model<
   })
   declare studentId: string;
 
-  @BelongsTo(() => User)
+  @BelongsTo(() => User, 'studentId')
   declare student?: NonAttribute<User>;
+
+  @HasMany(() => Grade)
+  declare grades: NonAttribute<Grade[]>;
 }

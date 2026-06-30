@@ -9,10 +9,12 @@ import {
   Column,
   DataType,
   ForeignKey,
+  HasMany,
   Model,
   Table,
 } from 'sequelize-typescript';
 import { Course } from './course.entity';
+import { Submission } from './submission.entity';
 
 @Table({
   tableName: 'assignments',
@@ -34,12 +36,19 @@ export class Assignment extends Model<
   @Column({
     type: DataType.STRING,
     allowNull: false,
+    validate: {
+      notEmpty: true,
+      len: [3, 255],
+    },
   })
   declare title: string;
 
   @Column({
     type: DataType.TEXT,
     allowNull: true,
+    validate: {
+      len: [0, 1000],
+    },
   })
   declare description: string | null;
 
@@ -47,14 +56,18 @@ export class Assignment extends Model<
     type: DataType.DATEONLY,
     allowNull: true,
   })
-  declare dueDate: Date | null;
+  declare dueDate: string | null;
 
   @Column({
     type: DataType.INTEGER,
     allowNull: false,
     defaultValue: 10,
+    validate: {
+      min: 1,
+      max: 100,
+    },
   })
-  declare totalMarks: number;
+  declare totalMarks: CreationOptional<number>;
 
   @ForeignKey(() => Course)
   @Column({
@@ -63,6 +76,9 @@ export class Assignment extends Model<
   })
   declare courseId: string;
 
-  @BelongsTo(() => Course)
+  @BelongsTo(() => Course, 'courseId')
   declare course?: NonAttribute<Course>;
+
+  @HasMany(() => Submission)
+  declare submissions: NonAttribute<Submission[]>;
 }

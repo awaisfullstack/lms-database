@@ -10,42 +10,44 @@ const GRADES = {
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.bulkDelete('grades', { id: Object.values(GRADES) });
-
-    await queryInterface.bulkInsert('grades', [
-      {
-        id: GRADES.enrollment1,
-        total_marks: 100,
-        obtained_marks: 92,
-        status: 'PASSED',
-        letter_grade: 'A',
-        enrollment_id: ENROLLMENTS.nestjs_student1,
-      },
-      {
-        id: GRADES.enrollment2,
-        total_marks: 100,
-        obtained_marks: 78,
-        status: 'PASSED',
-        letter_grade: 'B',
-        enrollment_id: ENROLLMENTS.nestjs_student2,
-      },
-      {
-        id: GRADES.enrollment3,
-        total_marks: 100,
-        obtained_marks: 58,
-        status: 'PASSED',
-        letter_grade: 'C',
-        enrollment_id: ENROLLMENTS.react_student1,
-      },
-      {
-        id: GRADES.enrollment4,
-        total_marks: 100,
-        obtained_marks: null,
-        status: 'INCOMPLETE',
-        letter_grade: null,
-        enrollment_id: ENROLLMENTS.react_student3,
-      },
-    ]);
+    await queryInterface.bulkInsert(
+      'grades',
+      [
+        {
+          id: GRADES.enrollment1,
+          total_marks: 100,
+          obtained_marks: 92,
+          status: 'PASSED',
+          letter_grade: 'A',
+          enrollment_id: ENROLLMENTS.nestjs_student1,
+        },
+        {
+          id: GRADES.enrollment2,
+          total_marks: 100,
+          obtained_marks: 78,
+          status: 'PASSED',
+          letter_grade: 'B',
+          enrollment_id: ENROLLMENTS.nestjs_student2,
+        },
+        {
+          id: GRADES.enrollment3,
+          total_marks: 100,
+          obtained_marks: 58,
+          status: 'PASSED',
+          letter_grade: 'C',
+          enrollment_id: ENROLLMENTS.react_student1,
+        },
+        {
+          id: GRADES.enrollment4,
+          total_marks: 100,
+          obtained_marks: null,
+          status: 'INCOMPLETE',
+          letter_grade: null,
+          enrollment_id: ENROLLMENTS.react_student3,
+        },
+      ],
+      { ignoreDuplicates: true },
+    );
   },
 
   async down(queryInterface, Sequelize) {

@@ -11,7 +11,6 @@ const REVIEWS = {
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.bulkDelete('reviews', { id: Object.values(REVIEWS) });
 
     await queryInterface.bulkInsert('reviews', [
       {
@@ -44,7 +43,7 @@ module.exports = {
         rating: 4,
         comment: 'Great explanations and easy to follow for beginners.',
       },
-    ]);
+    ],{ ignoreDuplicates: true },);
   },
 
   async down(queryInterface, Sequelize) {

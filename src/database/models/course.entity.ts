@@ -9,10 +9,15 @@ import {
   Column,
   DataType,
   ForeignKey,
+  HasMany,
   Model,
   Table,
 } from 'sequelize-typescript';
 import { User } from './user.entity';
+import { Enrollment } from './enrollment.entity';
+import { Review } from './reviews.entity';
+import { Module } from './module.entity';
+import { Assignment } from './assignment.entity';
 
 @Table({
   tableName: 'courses',
@@ -34,12 +39,19 @@ export class Course extends Model<
   @Column({
     type: DataType.STRING,
     allowNull: false,
+    validate: {
+      notEmpty: true,
+      len: [3, 255],
+    },
   })
   declare title: string;
 
   @Column({
     type: DataType.TEXT,
     allowNull: true,
+    validate: {
+      len: [0, 5000],
+    },
   })
   declare description: string | null;
 
@@ -50,6 +62,18 @@ export class Course extends Model<
   })
   declare createdBy: string;
 
-  @BelongsTo(() => User)
+  @BelongsTo(() => User, 'createdBy')
   declare user?: NonAttribute<User>;
+
+  @HasMany(() => Enrollment)
+  declare enrollments: NonAttribute<Enrollment[]>;
+
+  @HasMany(() => Review)
+  declare reviews: NonAttribute<Review[]>;
+
+  @HasMany(() => Module)
+  declare modules: NonAttribute<Module[]>;
+
+  @HasMany(() => Assignment)
+  declare assignments: NonAttribute<Assignment[]>;
 }

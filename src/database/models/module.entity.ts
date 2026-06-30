@@ -34,12 +34,19 @@ export class Module extends Model<
   @Column({
     type: DataType.STRING,
     allowNull: false,
+    validate: {
+      notEmpty: true,
+      len: [3, 255],
+    },
   })
   declare title: string;
 
   @Column({
     type: DataType.TEXT,
     allowNull: true,
+    validate: {
+      len: [0, 1000],
+    },
   })
   declare description: string | null;
 
@@ -47,6 +54,9 @@ export class Module extends Model<
     type: DataType.INTEGER,
     allowNull: false,
     defaultValue: 1,
+    validate: {
+      min: 1,
+    },
   })
   declare position: number;
 
@@ -57,6 +67,6 @@ export class Module extends Model<
   })
   declare courseId: string;
 
-  @BelongsTo(() => Course)
+  @BelongsTo(() => Course, 'courseId')
   declare course?: NonAttribute<Course>;
 }

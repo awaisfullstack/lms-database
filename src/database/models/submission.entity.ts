@@ -43,8 +43,12 @@ export class Submission extends Model<
   @Column({
     type: DataType.INTEGER,
     allowNull: true,
+    validate: {
+      min: 0,
+      max: 100,
+    },
   })
-  declare score: number | null;
+  declare score: CreationOptional<number | null>;
 
   @ForeignKey(() => Assignment)
   @Column({
@@ -53,7 +57,7 @@ export class Submission extends Model<
   })
   declare assignmentId: string;
 
-  @BelongsTo(() => Assignment)
+  @BelongsTo(() => Assignment, 'assignmentId')
   declare assignment?: NonAttribute<Assignment>;
 
   @ForeignKey(() => User)
@@ -63,6 +67,6 @@ export class Submission extends Model<
   })
   declare studentId: string;
 
-  @BelongsTo(() => User)
+  @BelongsTo(() => User, 'studentId')
   declare student?: NonAttribute<User>;
 }

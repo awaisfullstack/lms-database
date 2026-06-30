@@ -35,14 +35,21 @@ export class Review extends Model<
   @Column({
     type: DataType.INTEGER,
     allowNull: false,
+    validate: {
+      min: 1,
+      max: 5,
+    },
   })
   declare rating: number;
 
   @Column({
     type: DataType.TEXT,
     allowNull: true,
+    validate: {
+      len: [0, 500],
+    },
   })
-  declare comment: string | null;
+  declare comment: CreationOptional<string | null>;
 
   @ForeignKey(() => Course)
   @Column({
@@ -51,7 +58,7 @@ export class Review extends Model<
   })
   declare courseId: string;
 
-  @BelongsTo(() => Course)
+  @BelongsTo(() => Course, 'courseId')
   declare course?: NonAttribute<Course>;
 
   @ForeignKey(() => User)
@@ -61,6 +68,6 @@ export class Review extends Model<
   })
   declare studentId: string;
 
-  @BelongsTo(() => User)
+  @BelongsTo(() => User, 'studentId')
   declare student?: NonAttribute<User>;
 }

@@ -17,10 +17,6 @@ module.exports = {
       score: {
         type: Sequelize.INTEGER,
         allowNull: true,
-        validate: {
-          min: 1,
-          max: 100,
-        },
       },
       assignment_id: {
         type: Sequelize.UUID,

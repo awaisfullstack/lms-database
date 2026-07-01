@@ -25,10 +25,6 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
         defaultValue: 10,
-        validate: {
-          min: 10,
-          max: 100,
-        },
       },
       course_id: {
         type: Sequelize.UUID,
